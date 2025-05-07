@@ -1,20 +1,17 @@
 import React, { useState } from 'react'
 import Die from './components/Die'
 
-/**
- * Challenge:
- * 
- * Create state to hold our array of numbers. (Initialize
- * the state by calling our `generateAllNewDice` function so it 
- * loads all new dice as soon as the app loads)
- * 
- * Map over the state numbers array to generate our array
- * of Die components and render those in place of our
- * manually-written 10 Die elements.
- */
 
 
 export default function App() {
+    /**
+     * Challenge: Create a `Roll Dice` button that will re-roll
+     * all 10 dice
+     * 
+     * Clicking the button should generate a new array of numbers
+     * and set the `dice` state to that new array (thus re-rendering
+     * the array to the page)
+     */
 
     const [dice, setDice] = useState(generateAllNewDice())
 
@@ -32,11 +29,18 @@ export default function App() {
         return <Die key={index} value={die} />
     })
 
+    function rollDice() {
+        setDice(generateAllNewDice())
+    }
+
     return (
         <main>
             <div className='dice-container'>
                 {diceElements}
             </div>
+
+            {/*New button here*/}
+            <button className='roll-dice' onClick={rollDice}>Roll Dice</button>
 
         </main>
     )
