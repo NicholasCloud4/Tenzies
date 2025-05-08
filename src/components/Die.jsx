@@ -1,8 +1,8 @@
 import React from 'react'
 
-export default function Die({ value, isHeld }) {
+export default function Die({ value, isHeld, hold, id }) {
     return (
-        <button style={{ backgroundColor: isHeld === true ? "#59E391" : "white" }}>
+        <button onClick={() => hold(id)} style={{ backgroundColor: isHeld === true ? "#59E391" : "white" }}>
             {value}
         </button>
     )
