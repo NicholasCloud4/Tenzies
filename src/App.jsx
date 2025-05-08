@@ -7,25 +7,7 @@ import Confetti from 'react-confetti'
 
 export default function App() {
 
-    const [dice, setDice] = useState(generateAllNewDice())
-
-    /**
-     * Challenge:
-     * Log "Game won!" to the console only if the 2 winning
-     * conditions are met.
-     * 
-     * 1. all the dice are being held, and
-     * 2. all the dice have the same value
-     * 
-     * For now, no need to even save a variable!
-     */
-
-    /**
-     * Challenge part 2:
-     * 1. Create a new `gameWon` variable.
-     * 2. If `gameWon` is true, change the button text to
-     *    "New Game" instead of "Roll"
-     */
+    const [dice, setDice] = useState(() => generateAllNewDice())
 
     let gameWon = dice.every(die => die.isHeld === true) && dice.every(die => die.value === dice[0].value)
 
@@ -51,10 +33,13 @@ export default function App() {
 
 
     function rollDice() {
-        //setDice(generateAllNewDice())
-        setDice(oldDice => oldDice.map((die) => {
-            return die.isHeld ? die : { ...die, value: Math.floor(Math.random() * 6 + 1) }
-        }))
+        if (gameWon === false) {
+            setDice(oldDice => oldDice.map((die) => {
+                return die.isHeld ? die : { ...die, value: Math.floor(Math.random() * 6 + 1) }
+            }))
+        } else {
+            setDice(generateAllNewDice())
+        }
     }
 
 
@@ -74,8 +59,9 @@ export default function App() {
                 {diceElements}
             </div>
 
-            {gameWon === true ? <button className='roll-dice' onClick={rollDice}>New Game</button> :
-                <button className='roll-dice' onClick={rollDice}>Roll Dice</button>}
+
+            <button className='roll-dice' onClick={rollDice}>{gameWon === true ? "New Game" : "Roll Dice"}</button>
+
 
         </main>
     )
